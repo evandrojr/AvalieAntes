@@ -1,5 +1,13 @@
 --Empresas com mais reclamações
-SELECT razao_social_rfb, count(razao_social_rfb) FROM r  group by razao_social_rfb order by count(razao_social_rfb) desc
+SELECT (select nome_fantasia from r where radical_cnpj=todos.radical_cnpj), count(radical_cnpj) FROM r as todos group by numero_cnpj order by count(radical_cnpj) desc
+
+
+--Empresas com mais reclamações ver 2
+SELECT (select nome_fantasia from r where radical_cnpj=todos.radical_cnpj limit 1),
+(select numero_cnpj from r where numero_cnpj=todos.numero_cnpj limit 1), 
+count(radical_cnpj) FROM r as todos group by radical_cnpj order by count(radical_cnpj) desc
+
+--Falta agrupar as empresas semelhantes
 
 --Tipos de produtos com mais reclamações
 SELECT descricao_assunto, count(descricao_assunto) FROM r  group by descricao_assunto order by count(descricao_assunto) desc

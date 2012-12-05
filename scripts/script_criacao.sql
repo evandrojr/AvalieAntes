@@ -29,5 +29,6 @@ ENGINE = MyISAM;
 
 
 CREATE INDEX razao_social_rfb_idx ON r (razao_social_rfb(30));
+CREATE INDEX razao_social_idx ON r (razao_social(30));
 CREATE INDEX numero_cnpj_idx ON r (numero_cnpj(14));
 CREATE INDEX radical_cnpj_idx ON r (radical_cnpj(8));
