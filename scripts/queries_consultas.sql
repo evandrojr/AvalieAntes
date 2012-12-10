@@ -1,11 +1,22 @@
 --Empresas com mais reclamações
-SELECT (select nome_fantasia from r where radical_cnpj=todos.radical_cnpj), count(radical_cnpj) FROM r as todos group by numero_cnpj order by count(radical_cnpj) desc
+SELECT (select nome_fantasia from r where radical_cnpj=todos.radical_cnpj), count(radical_cnpj) FROM r as todos group by numero_cnpj order by count(radical_cnpj) desc limit 100
 
 
---Empresas com mais reclamações ver 2
-SELECT (select nome_fantasia from r where radical_cnpj=todos.radical_cnpj limit 1),
-(select numero_cnpj from r where numero_cnpj=todos.numero_cnpj limit 1), 
-count(radical_cnpj) FROM r as todos group by radical_cnpj order by count(radical_cnpj) desc
+--100 Empresas com mais reclamações ver 2
+
+   select	
+        (select nome_fantasia from r where radical_cnpj=todos.radical_cnpj limit 1) as Empresa ,
+        (select numero_cnpj from r where numero_cnpj=todos.numero_cnpj limit 1) as CNPJ, 
+        radical_cnpj As radical_cnpj, 
+        count(radical_cnpj) As Reclamacoes, 
+	sum(atendida) as Atendidas,
+	(sum(atendida) /count(radical_cnpj)) * 100 as '% Atendidas'
+    FROM r as todos 
+    group by radical_cnpj 
+    order by count(radical_cnpj) 
+    desc limit 100
+
+
 
 --Falta agrupar as empresas semelhantes
 
