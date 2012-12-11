@@ -1,0 +1,110 @@
+<?php
+require_once("../conf.php");
+?>
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>phpChart - Data Renderer Demo</title>
+	</head>
+	<body>
+		<div><span> </span><span id="info1b"></span></div>
+
+<?php
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Chart 1 Example
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+$line1 = array(-3.5, -3, -2.5, -2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5);
+
+
+$pc = new C_PhpChartX(array($line1),'plot');
+$pc->add_plugins(array('ohlcRenderer','json2','ciParser'));
+$pc->set_title(array('text'=>'Sine Data Renderer'));
+$pc->set_data_renderer('js::sineRenderer');
+$pc->draw();
+?>
+<script>
+sineRenderer = function() {
+	var data = [[]];
+	for (var i=0; i<13; i+=0.5) {
+	  data[0].push([i, Math.sin(i)]);
+	}
+	return data;
+  };
+</script>
+
+<?php
+/*
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Chart 2 Example
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+$pc = new C_PhpChartX('./jsondata.txt','plot2');
+$pc->add_plugins(array('ohlcRenderer','json2','ciParser'));
+$pc->set_title(array('text'=>'AJAX JSON Data Renderer'));
+$pc->set_data_renderer('js::ajaxDataRenderer');
+$pc->set_data_rendererOptions(array('unusedOptionalUrl'=>'jsondata.txt'));
+$pc->draw();
+*/
+?>
+<script>
+var ajaxDataRenderer = function(url, plot) 
+		{
+			var ret = null;
+			$.ajax({
+				// have to use synchronous here, else returns before data is fetched
+				async: false,
+				url: url,
+				dataType:'json',
+				success: function(data) {
+					ret = data;
+				}
+			});
+			return ret;
+		};
+</script>
+
+<?php
+/*
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//Chart 3 Example
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	$jsonstr = '{"PriceTicks": [{"Price":5.5,"TickDate":"\/Date(1283745600000)\/"}, \
+			{"Price":6.8,"TickDate":"\/Date(1283832000000)\/"}, \
+			{"Price":7.1,"TickDate":"\/Date(1283918400000)\/"}], \
+		"PriceBars": [{"BarDate":"\/Date(1283745600000)\/","Close":10.0,"High":15.0,"Low":8.0,"Open":9.0}, \
+			{"BarDate":"\/Date(1283832000000)\/","Close":10.6,"High":14.3,"Low":9.1,"Open":12.5}, \
+			{"BarDate":"\/Date(1283918400000)\/","Close":12.0,"High":13.0,"Low":9.0,"Open":9.8}]}';
+
+	$pc = new C_PhpChartX($jsonstr,'plot3');
+	$pc->add_plugins(array('ohlcRenderer','json2','ciParser'));
+	$pc->set_title(array('text'=>'Custom JSON Format, JSON Encoded String'));
+	$pc->set_data_renderer('plugin::ciParser');
+
+	$pc->set_axes(array(
+		'xaxis'=>array(
+			'renderer'=>'plugin::DateAxisRenderer',
+			'tickInterval'=>'1 day',
+			'tickOptions'=>array('formatString'=>'%y/%m/%d'),
+			'min'=>'2010/09/05',
+			'max'=>'2010/09/09')
+	));
+
+	$pc->add_series(array());
+	$pc->add_series(array(
+			'renderer'=>'plugin::OHLCRenderer',
+			'rendererOptions'=>array('candleStick'=>true)));
+	$pc->draw();
+*/	
+?>
+
+	</body>
+</html>

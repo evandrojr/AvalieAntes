@@ -1,0 +1,77 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>phpChart - Bar Test</title>
+</head>
+    <body>
+        <div><span> </span><span id="info1b"></span></div>
+
+<!--[if lt IE 9]><script language="javascript" type="text/javascript" src="../js/excanvas.min.js"></script><![endif]-->
+<link rel="stylesheet" type="text/css" href="../js/jquery.jqplot.min.css" />
+<script type="text/javascript">if (typeof jQuery == "undefined"){document.write("<script src='../js/jquery.min.js' language='javascript' type='text/javascript'><\/script>");}</script>
+<script language="javascript" type="text/javascript" src="../js/jquery.jqplot.min.js"></script>
+<script language="javascript" type="text/javascript" src="../js/plugins/jqplot.highlighter.min.js"></script>
+<script language="javascript" type="text/javascript" src="../js/plugins/jqplot.pointlabels.min.js"></script>
+<script language="javascript" type="text/javascript" src="../js/plugins/jqplot.categoryaxisrenderer.min.js"></script>
+<script language="javascript" type="text/javascript" src="../js/plugins/jqplot.barrenderer.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/debug.css" /><link rel="stylesheet" type="text/css" href="../js/highlighter/styles/zenburn.css" /><script src="../js/highlighter/highlight.pack.js"></script><script>hljs.initHighlightingOnLoad();</script><script src="../js/jquery-ui-1.8.16.custom.min.js"></script><link rel="stylesheet" type="text/css" href="../js/css/cupertino/jquery-ui-1.8.16.custom.css" /><div id="bind_chart5"><span id="bind_span_label_chart5"></span><span id="bind_span_data_chart5"></span></div>
+<div id="chart5" class="plot jqplot-target" style="width:800px;height:300px;"></div>
+
+
+<h3 style="color:#2779AA;">Renderer plugins used:</h3>
+<pre><code>Array
+(
+    [0] => highlighter
+    [1] => pointlabels
+    [2] => categoryaxisrenderer
+    [3] => barrenderer
+)
+</code></pre>
+<br /><br /><br /><br /><hr size="1" />
+<script class="code"  language="javascript" type="text/javascript">
+    var _chart5_plot_properties;
+    $(document).ready(function () {
+        setTimeout(function () {
+            _chart5_plot_properties = {
+                "series": [
+    {
+        "renderer": $.jqplot.BarRenderer, "rendererOptions": {
+            "highlightMouseDown": true, "barDirection": "horizontal"
+        }, "label": "Modulo", "shadowAngle": 135, "pointLabels": {
+            "show": true, "location": "e", "edgeTolerance": -15
+        }
+    }, {
+        "label": "10", "color": "red", "showMarker": false
+    }, {
+        "label": "50", "color": "blue", "showMarker": false
+    }
+  ], "legend": {
+      "show": true, "location": "ne"
+  }, "axes": {
+      "xaxis": {
+          "tickInterval": 10,
+          "min": 0, "max": 100, "properties": "xaxis"
+      }, "yaxis": {
+          "ticks": [
+        "Modulo3", "Modulo1", "Modulo4", "Modulo2"
+      ], "renderer": $.jqplot.CategoryAxisRenderer, "properties": "yaxis"
+      }
+  }, "animate": true, "animateReplot": true, "captureRightClick": true
+            }
+
+
+
+            $.jqplot.config.enablePlugins = 0;
+            $.jqplot.config.defaultHeight = 300;
+            $.jqplot.config.defaultWidth = 400;
+            chart5 = $.jqplot("chart5", [[[50, 1], [38, 2], [35, 3], [60, 4]], [[10, 0.6], [10, 4.4]], [[50, 0.6], [50, 4.4]]], _chart5_plot_properties);
+
+        }, 200);
+    });
+</script>
+<script type="text/javascript" src="../js/showjs.js"></script>
+
+<div style="clear:both;">&nbsp;</div>
+    </body>
+</html>

@@ -1,0 +1,59 @@
+<?php
+require_once("../conf.php");
+?>
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>phpChart - Category Hortizontal Bar</title>
+</head>
+    <body>
+        <div><span> </span><span id="info1b"></span></div>
+
+<?php
+    
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Line 1 Example
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    $line1 = array(array(2,4), array(1,6), array(3,2), array(4,9), array(5,16));
+    
+    $pc = new C_PhpChartX(array($line1),'chart1');
+    $pc->add_series(array('label'=>'1st Qtr'));
+    $pc->set_axes(array(
+            'xaxis'=> array('ticks'=>array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'), 'renderer'=>'plugin::CategoryAxisRenderer')
+            ));
+    $pc->draw(400,300);
+/*
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Line 2 Example
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    $line1 = array(array(4, 1), array(2, 2), array(9, 3), array(16, 4));
+    $line2 = array(array(3, 1), array(7, 2), array(6.25, 3), array(3.125, 4));
+
+    $pc = new C_PhpChartX(array($line1,$line2),'chart2');
+    $pc->set_stack_series(true);
+    $pc->set_legend(array('show'=>true,'location'=>'se'));
+    $pc->set_title(array('text'=>'Unit Sales: Acme Decoy Division'));
+
+    $pc->set_series_default(array(
+		'renderer'=>'plugin::BarRenderer',
+		'rendererOptions'=>array('barDirection'=>'horizontal','barPadding'=>'6','barMargin'=>'40')));
+
+    $pc->add_series(array('label'=>'1st Qtr'));
+    $pc->add_series(array('label'=>'2nd Qtr'));
+
+    $pc->set_axes(array(
+            'yaxis'=> array('ticks'=>array('Q1', 'Q2', 'Q3', 'Q4'), 'renderer'=>'plugin::CategoryAxisRenderer'),
+            'xaxis'=> array('min'=> 0, 'max'=> 20, 'numberTicks'=>5)
+            ));
+    $pc->draw(400,300);
+*/
+?>
+
+    </body>
+</html>
