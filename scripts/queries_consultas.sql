@@ -4,17 +4,19 @@ SELECT (select nome_fantasia from r where radical_cnpj=todos.radical_cnpj), coun
 
 --100 Empresas com mais reclamações ver 2
 
-   select	
-        (select nome_fantasia from r where radical_cnpj=todos.radical_cnpj limit 1) as Empresa ,
-        (select numero_cnpj from r where numero_cnpj=todos.numero_cnpj limit 1) as CNPJ, 
-        radical_cnpj As radical_cnpj, 
-        count(radical_cnpj) As Reclamacoes, 
-	sum(atendida) as Atendidas,
-	(sum(atendida) /count(radical_cnpj)) * 100 as '% Atendidas'
-    FROM r as todos 
-    group by radical_cnpj 
-    order by count(radical_cnpj) 
-    desc limit 100
+drop table mais_reclamacoes;
+create table mais_reclamacoes
+select	
+    (select nome_fantasia from r where radical_cnpj=todos.radical_cnpj limit 1) as Empresa ,
+    (select numero_cnpj from r where numero_cnpj=todos.numero_cnpj limit 1) as CNPJ, 
+    radical_cnpj As radical_cnpj, 
+    count(radical_cnpj) As Reclamacoes, 
+    sum(atendida) as Atendidas,
+    (1 - sum(atendida) /count(radical_cnpj)) * 100 as '% Nao Atendidas'
+FROM r as todos 
+group by radical_cnpj 
+order by count(radical_cnpj) 
+desc limit 100;
 
 
 

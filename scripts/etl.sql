@@ -29,3 +29,28 @@
             select distinct radical_cnpj from r where nome_fantasia like 'vivo%' or nome_fantasia like '%vivo ' or nome_fantasia like 'TELEFONICA%' or nome_fantasia like '%TELEFONICA ';
     update r set nome_fantasia = 'VIVO/TELEFONICA', razao_social = 'VIVO/TELEFONICA', numero_cnpj = '02449992018101', radical_cnpj = '02449992' where radical_cnpj in (select * from vivo_radical_cnpj);
 
+    --Agrupar LG
+    drop table lg_radical_cnpj;
+    create table lg_radical_cnpj 
+            select distinct radical_cnpj from r where nome_fantasia like 'lg%' or nome_fantasia like '%lg ';
+    update r set nome_fantasia = 'LG', razao_social = 'LG', numero_cnpj = '00801450000183', radical_cnpj = '00801450' where radical_cnpj in (select * from lg_radical_cnpj);
+
+    --Agrupar compra_facil
+    drop table compra_facil_radical_cnpj;
+    create table compra_facil_radical_cnpj 
+            select distinct radical_cnpj from r where nome_fantasia like 'compra facil%' or nome_fantasia like '%compra facil ';
+    update r set nome_fantasia = 'COMPRA FACIL', razao_social = 'COMPRA FACIL', numero_cnpj = '33068883000120', radical_cnpj = '33068883' where radical_cnpj in (select * from compra_facil_radical_cnpj);
+
+    drop table mais_reclamacoes;
+    create table mais_reclamacoes
+    select	
+        (select nome_fantasia from r where radical_cnpj=todos.radical_cnpj limit 1) as Empresa ,
+        (select numero_cnpj from r where numero_cnpj=todos.numero_cnpj limit 1) as CNPJ, 
+        radical_cnpj As radical_cnpj, 
+        count(radical_cnpj) As Reclamacoes, 
+	sum(atendida) as Atendidas,
+	(1 - sum(atendida) /count(radical_cnpj)) * 100 as '% Nao Atendidas'
+    FROM r as todos 
+    group by radical_cnpj 
+    order by count(radical_cnpj) 
+    desc limit 100;

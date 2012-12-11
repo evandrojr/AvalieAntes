@@ -1,40 +1,14 @@
 <?php
-include_once "lib/highchartsphp/Highchart.php";
-require_once "config.php";
-
-
-$rs = $pdo->query("SELECT * FROM mais_reclamacoes")->fetchAll();
-if(!$rs){
-   print_r($pdo->errorInfo());
-}
-
-
-$empresaAr = array();
-$reclamacoesAr = array();
-$atendidasAr = array();
-
-$maxEmpresas = 15;
-foreach ($rs as $reg){
-        if(!$maxEmpresas)
-                     break;
-        $empresaAr[] =  str_replace("S/ A", "S/A", str_replace("/","/ ", $reg['Empresa']));
-        $naoAtendidasAr[] = intval($reg[3]) - intval($reg[4]);
-        $atendidasAr[] =  intval($reg[4]);
-        $maxEmpresas-=1;
-}    
-
-
+include_once "../../../Highchart.php";
 
 $chart = new Highchart();
 
 $chart->chart->renderTo = "container";
 $chart->chart->type = "column";
 $chart->title->text = "Stacked column chart";
-$chart->xAxis->categories = $empresaAr;
+$chart->xAxis->categories = array('Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas');
 $chart->yAxis->min = 0;
-$chart->yAxis->title->text = "Reclamações por empresa";
-$chart->title->text = "Empresas com mais reclamaçoes no Procon em 2011";
-$chart->subtitle->text = "Fonte: http://dados.gov.br";
+$chart->yAxis->title->text = "Total fruit consumption";
 $chart->yAxis->stackLabels->enabled = 1;
 $chart->yAxis->stackLabels->style->fontWeight = "bold";
 $chart->yAxis->stackLabels->style->color = new HighchartJsExpr("(Highcharts.theme && Highcharts.theme.textColor) || 'gray'");
@@ -57,14 +31,14 @@ $chart->plotOptions->column->stacking = "normal";
 $chart->plotOptions->column->dataLabels->enabled = 1;
 $chart->plotOptions->column->dataLabels->color = new HighchartJsExpr("(Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'");
 
+$chart->series[] = array('name' => "John",
+                         'data' => array(5, 3, 4, 7, 2));
 
-$chart->series[] = array('name' => "Reclamações atendidas",
-                         'data' => $atendidasAr);
+$chart->series[] = array('name' => "Jane",
+                         'data' => array(2, 2, 3, 2, 1));
 
-$chart->series[] = array('name' => "Reclamações não atendidas",
-                         'data' => $naoAtendidasAr);
-
-
+$chart->series[] = array('name' => "Joe",
+                         'data' => array(3, 4, 4, 2, 5));
 ?>
 
 <html>
